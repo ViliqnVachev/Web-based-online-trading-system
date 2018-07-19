@@ -1,5 +1,5 @@
 # Web-based-online-trading-system
-diploma project
+Diploma project
 
 
 This system has two types of users. (registered users, unregistered users).
