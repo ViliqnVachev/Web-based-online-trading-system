@@ -11,6 +11,7 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Verify auth
             if (Session["UserName"] == null || Session["UserId"] == null)
             {
                 Response.Redirect("login.aspx");
@@ -21,7 +22,7 @@ namespace webStore
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectIndex = GridView1.SelectedRow.Cells[4].Text;
-            Session["ProductNameOrder"] = selectIndex;
+            Session["ProductNumber"] = selectIndex;
 
             if (Session["Order"] != null)
             {

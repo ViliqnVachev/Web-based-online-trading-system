@@ -163,7 +163,7 @@
                     <em>
                     <br />
                     <br />
-                    <asp:Button ID="Button1" runat="server" class="btn btn-default" Text="Add product" OnClick="Button1_Click" />
+                    <asp:Button ID="AddButton" runat="server" class="btn btn-default" Text="Add product" OnClick="AddButton_Click" />
                     </em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input id="Button2" type="button"  class="btn btn-primary" value="Cencel" onclick="window.location.href='home.aspx'" /></td>
                 <td class="auto-style17"></td>

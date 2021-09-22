@@ -13,47 +13,40 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["UserName"] != null)
+            //Verify for auth
+            if (Session["UserName"] != null)
             {
                 Response.Redirect("home.aspx");
             }
-            if (IsPostBack)
-            {
-               
-
-               
-            }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Register_Click(object sender, EventArgs e)
         {
             try
             {
-               
-
+                // Create db connection
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationStoreConnectionString"].ConnectionString);
                 conn.Open();
 
-                string checkUser = "select count(*) from Users where userName='" + TextBoxUserName.Text + "'";
-                SqlCommand comm = new SqlCommand(checkUser, conn);
-                int temp = Convert.ToInt32(comm.ExecuteScalar().ToString());
+                string selectUsersQuery = "select count(*) from Users where userName='" + TextBoxUserName.Text + "'";
+                SqlCommand comm = new SqlCommand(selectUsersQuery, conn);
+                int userExistsValue = Convert.ToInt32(comm.ExecuteScalar().ToString());
                 conn.Close();
 
-               
-
-                if (temp == 1)
+                //Verify user
+                if (userExistsValue == 1)
                 {
-                    Label1.Visible = true;
-
+                    //Show label for non exist user
+                    userExistsError.Visible = true;
                     return;
                 }
 
-                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationStoreConnectionString"].ConnectionString);
+                // Insert new user in db
                 conn.Open();
 
-                string insert = "insert into Users(first_name,lastst_name,address,telephone,email,userName,password)" +
+                string insertUserQuery = "insert into Users(first_name,lastst_name,address,telephone,email,userName,password)" +
                     "values(@firtName,@lastName,@address,@telephone,@email,@userName,@password)";
-                comm = new SqlCommand(insert, conn);
+                comm = new SqlCommand(insertUserQuery, conn);
                 comm.Parameters.AddWithValue("@firtName", TextBoxFirstN.Text);
                 comm.Parameters.AddWithValue("@lastName", TextBoxLastN.Text);
                 comm.Parameters.AddWithValue("@address", TextBoxAddress.Text);
@@ -61,13 +54,21 @@ namespace webStore
                 comm.Parameters.AddWithValue("@email", TextBoxMail.Text);
                 comm.Parameters.AddWithValue("@userName", TextBoxUserName.Text);
                 comm.Parameters.AddWithValue("@password", TextBoxPassword.Text);
-
                 comm.ExecuteNonQuery();
 
                 Response.Write("Registration is successful");
-                Response.Redirect("login.aspx");
+
+                // Create session
+                string checkUserIdQery = "select id_user from Users where userName='" + TextBoxUserName.Text + "'";
+                SqlCommand idUserComm = new SqlCommand(checkUserIdQery, conn);
+                string userID = idUserComm.ExecuteScalar().ToString().Replace(" ", "");
+
+                Session["UserName"] = TextBoxUserName.Text;
+                Session["UserId"] = userID;
+                Response.Redirect("home.aspx");
+
                 conn.Close();
-               // Session["UserName"] = TextBoxUserName.Text;
+
             }
             catch (Exception ex)
             {

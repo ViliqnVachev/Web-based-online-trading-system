@@ -42,7 +42,7 @@
                         <li class="my"><a href="myproducts.aspx">My Products</a></li>
                         <li class="my"><a href="myorder.aspx">My Orders</a></li>
                         <li class="my"><a href="cart.aspx">Cart</a></li>
-                        <li class="my"><a href="login.aspx">Logout</a></li>
+                        <li class="my"><a href="homeNoRegister.aspx">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
     <footer>
         <div class="container modal-footer">
-            <p>&copy; 2018 - University Of National And World Economy</p>
+            <p>&copy; 2021 - Technical University- Sofia </p>
         </div>
     </footer>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

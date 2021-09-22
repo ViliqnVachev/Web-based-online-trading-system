@@ -13,50 +13,55 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Create session 
             Session["UserName"] = null;
             Session["Price"] = 0.0;
-
-            Dictionary<string, string> map = new Dictionary<string, string>();
         }
 
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {
+            //Create db connection for new user registration
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationStoreConnectionString"].ConnectionString);
             conn.Open();
 
-            string checkUser = "select count(*) from Users where userName='" + TextBoxUserName.Text + "'";
-            SqlCommand comm = new SqlCommand(checkUser, conn);
-            int temp = Convert.ToInt32(comm.ExecuteScalar().ToString());
+            string selectUsersQuery = "select count(*) from Users where userName='" + TextBoxUserName.Text + "'";
+            SqlCommand comm = new SqlCommand(selectUsersQuery, conn);
+            int userExistsValue = Convert.ToInt32(comm.ExecuteScalar().ToString());
 
             conn.Close();
-            
-            if (temp == 1)
+
+            //Verify user
+            if (userExistsValue == 1)
             {
                 LabelPass.Visible = false;
                 LabelUser.Visible = false;
 
-
                 conn.Open();
-                string checkPassword = "select password from Users where userName='" + TextBoxUserName.Text + "'";
-                SqlCommand passComm = new SqlCommand(checkPassword, conn);
+                string checkPasswordQery = "select password from Users where userName='" + TextBoxUserName.Text + "'";
+                SqlCommand passComm = new SqlCommand(checkPasswordQery, conn);
                 string password = passComm.ExecuteScalar().ToString().Replace(" ", "");
 
-                string checkUserId = "select id_user from Users where userName='" + TextBoxUserName.Text + "'";
-                SqlCommand idUserComm = new SqlCommand(checkUserId, conn);
-                string id = idUserComm.ExecuteScalar().ToString().Replace(" ", "");
+                string checkUserIdQery = "select id_user from Users where userName='" + TextBoxUserName.Text + "'";
+                SqlCommand idUserComm = new SqlCommand(checkUserIdQery, conn);
+                string userID = idUserComm.ExecuteScalar().ToString().Replace(" ", "");
 
                 if (password == TextBoxPassword.Text)
                 {
-                    //Start Session
-
+                    //Create Session
                     Session["UserName"] = TextBoxUserName.Text;
-                    Session["UserId"] = id;
-
-
-                    Response.Write("Password is correct");
-
-                    Response.Redirect("home.aspx");
-
+                    Session["UserId"] = userID;
+                    if (TextBoxUserName.Text == "admin")
+                    {
+                        //Redirect to admin panel
+                        Response.Write("Password is correct");
+                        Response.Redirect("homeAdmin.aspx");
+                    }
+                    else
+                    {
+                        //Redirect to home page
+                        Response.Write("Password is correct");
+                        Response.Redirect("home.aspx");
+                    }
                 }
                 else
                 {

@@ -11,6 +11,8 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            //Verify auth
             if (Session["UserName"] == null || Session["UserId"] == null)
             {
                 Response.Redirect("login.aspx");

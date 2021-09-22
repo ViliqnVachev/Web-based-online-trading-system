@@ -145,7 +145,7 @@
 &nbsp;
                 <asp:Button ID="CalculateButton" runat="server" class="btn btn-default" Text="Calculate" OnClick="CalculateButton_Click" />
                 &nbsp;
-                <asp:Button ID="Button2" runat="server" class="btn btn-primary" Text="Add to Cart" OnClick="Button2_Click" />
+                <asp:Button ID="AddToCart" runat="server" class="btn btn-primary" Text="Add to Cart" OnClick="AddToCart_Click" />
             </td>
             <td class="auto-style12"></td>
         </tr>

@@ -135,16 +135,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
     <Content Include="cart.aspx" />
-    <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="create.aspx" />
-    <Content Include="Default.aspx" />
     <Content Include="delete.aspx" />
     <Content Include="details.aspx" />
+    <Content Include="detailsProduct.aspx" />
+    <Content Include="editUser.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -156,6 +155,8 @@
     </Content>
     <Content Include="headphones.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="homeAdmin.aspx" />
+    <Content Include="homeNoRegister.aspx" />
     <Content Include="login.aspx" />
     <Content Include="Main.Master" />
     <EntityDeploy Include="models\Store_data.edmx">
@@ -167,6 +168,7 @@
       <DependentUpon>Store_data.edmx</DependentUpon>
     </Content>
     <Content Include="Main2.Master" />
+    <Content Include="AdminMain.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="models\Store_data.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -182,6 +184,7 @@
     <Content Include="myproducts.aspx" />
     <Content Include="order.aspx" />
     <Content Include="other.aspx" />
+    <Content Include="products.aspx" />
     <Content Include="register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -213,25 +216,25 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="script\bootstrap.js" />
     <Content Include="script\jquery-3.3.1.js" />
-    <Content Include="Site.Master" />
     <Content Include="style\MyCSS.css" />
+    <Content Include="style\MyCSSAdmin.css" />
     <Content Include="style\style.css" />
     <Content Include="telephones.aspx" />
+    <Content Include="userDetails.aspx" />
     <Content Include="users.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
-    <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="AdminMain.Master.cs">
+      <DependentUpon>AdminMain.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="AdminMain.Master.designer.cs">
+      <DependentUpon>AdminMain.Master</DependentUpon>
     </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="cart.aspx.cs">
       <DependentUpon>cart.aspx</DependentUpon>
@@ -240,26 +243,12 @@
     <Compile Include="cart.aspx.designer.cs">
       <DependentUpon>cart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-    </Compile>
     <Compile Include="create.aspx.cs">
       <DependentUpon>create.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="create.aspx.designer.cs">
       <DependentUpon>create.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="delete.aspx.cs">
       <DependentUpon>delete.aspx</DependentUpon>
@@ -274,6 +263,20 @@
     </Compile>
     <Compile Include="details.aspx.designer.cs">
       <DependentUpon>details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="detailsProduct.aspx.cs">
+      <DependentUpon>detailsProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="detailsProduct.aspx.designer.cs">
+      <DependentUpon>detailsProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editUser.aspx.cs">
+      <DependentUpon>editUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editUser.aspx.designer.cs">
+      <DependentUpon>editUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -291,6 +294,20 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="homeAdmin.aspx.cs">
+      <DependentUpon>homeAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="homeAdmin.aspx.designer.cs">
+      <DependentUpon>homeAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="homeNoRegister.aspx.cs">
+      <DependentUpon>homeNoRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="homeNoRegister.aspx.designer.cs">
+      <DependentUpon>homeNoRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -384,6 +401,13 @@
     <Compile Include="other.aspx.designer.cs">
       <DependentUpon>other.aspx</DependentUpon>
     </Compile>
+    <Compile Include="products.aspx.cs">
+      <DependentUpon>products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="products.aspx.designer.cs">
+      <DependentUpon>products.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="register.aspx.cs">
       <DependentUpon>register.aspx</DependentUpon>
@@ -392,26 +416,19 @@
     <Compile Include="register.aspx.designer.cs">
       <DependentUpon>register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Site.Master.cs">
-      <DependentUpon>Site.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Master.designer.cs">
-      <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
     <Compile Include="telephones.aspx.cs">
       <DependentUpon>telephones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="telephones.aspx.designer.cs">
       <DependentUpon>telephones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="userDetails.aspx.cs">
+      <DependentUpon>userDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="userDetails.aspx.designer.cs">
+      <DependentUpon>userDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="users.aspx.cs">
       <DependentUpon>users.aspx</DependentUpon>

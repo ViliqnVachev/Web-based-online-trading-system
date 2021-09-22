@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMain.master.cs" Inherits="webStore.AdminMain" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link href="style/style.css" rel="stylesheet" />
+    <link href="style/MyCSSAdmin.css" rel="stylesheet" />
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/bootstrap.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-default navbar-fixed-top text-uppercase">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="homeAdmin.aspx" class="navbar-brand my">Web Store</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="my"><a href="homeAdmin.aspx">Home</a></li>                      
+                        <li class="my"><a href="users.aspx">Users</a></li>
+                        <li class="my"><a href="products.aspx">Products</a></li>                       
+                        <li class="my"><a href="homeNoRegister.aspx">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <asp:ContentPlaceHolder ID="main" runat="server">
+        </asp:ContentPlaceHolder>
+    </main>
+
+    <footer>
+        <div class="container modal-footer">
+            <p>&copy; 2021 - Technical University- Sofia </p>
+        </div>
+    </footer>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+    </asp:ContentPlaceHolder>
+
+</body>
+</html>

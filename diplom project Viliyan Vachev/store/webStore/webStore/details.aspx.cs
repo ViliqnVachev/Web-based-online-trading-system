@@ -14,12 +14,15 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            // Verify auth
             if (Session["UserName"] == null || Session["UserId"] == null)
             {
                 Response.Redirect("login.aspx");
             }
 
-            if (Session["ProductNameOrder"] == null)
+            // Verify product select
+            if (Session["ProductNumber"] == null)
             {
                 Response.Redirect("home.aspx");
             }
@@ -29,52 +32,50 @@ namespace webStore
                 Response.Redirect("order.aspx");
             }
 
-
+            // Load data from db
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ProductsConnectionString"].ConnectionString);
-            int id = int.Parse(Session["ProductNameOrder"].ToString());
+            int productID = int.Parse(Session["ProductNumber"].ToString());
             conn.Open();
+
             // Get Product Name
-            string comand = "select product_name from Products where id_product='" + id + "'";
-            SqlCommand comm = new SqlCommand(comand, conn);
+            string selectCommand = "select product_name from Products where id_product='" + productID + "'";
+            SqlCommand comm = new SqlCommand(selectCommand, conn);
             string name = comm.ExecuteScalar().ToString();
 
             //Get Price 
-            comand = "select price from Products where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select price from Products where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string price = comm.ExecuteScalar().ToString().Replace(" ", "");
 
             //Get Quantity
-            comand = "select quantity from Products where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select quantity from Products where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string quantity = comm.ExecuteScalar().ToString().Replace(" ", "");
 
             //Get Description
-            comand = "select description from Products where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select description from Products where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string description = comm.ExecuteScalar().ToString();
 
             //Get Images
-
-            comand = "select image from Products where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select image from Products where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string image = comm.ExecuteScalar().ToString();
 
-            comand = "select id_category from Products where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
-            string categoryId = comm.ExecuteScalar().ToString().Replace(" ", "");
+            //Get category id
+            selectCommand = "select id_category from Products where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
+            string categoryID = comm.ExecuteScalar().ToString().Replace(" ", "");
             conn.Close();
 
             conn = new SqlConnection(ConfigurationManager.ConnectionStrings["CategoryConnectionString"].ConnectionString);
             conn.Open();
-            comand = "select gategory_name from Categories where id_category='" + categoryId + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select gategory_name from Categories where id_category='" + categoryID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string category = comm.ExecuteScalar().ToString().Replace(" ", "");
-            conn.Close();
 
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["CartConnectionString"].ConnectionString);
-            conn.Open();
-            comand = "select sum(quantity) from Carts where id_product='" + id + "'";
-            comm = new SqlCommand(comand, conn);
+            selectCommand = "select sum(quantity) from Carts where id_product='" + productID + "'";
+            comm = new SqlCommand(selectCommand, conn);
             string orderedQuantity = comm.ExecuteScalar().ToString().Replace(" ", "");
             conn.Close();
 
@@ -85,44 +86,41 @@ namespace webStore
 
             int realQuantity = int.Parse(quantity) - int.Parse(orderedQuantity);
 
+            // Fill text boxes
             TextBoxProdName.Text = name;
             TextBoxPrice.Text = price;
             TextBoxQuantity.Text = realQuantity.ToString();
             TextBoxDesc.Text = description;
             Image1.ImageUrl = image.ToString();
             TextBoxCategoryName.Text = category;
-
-
-
         }
 
         protected void ButtonOrder_Click(object sender, EventArgs e)
         {
             DateTime localDate = DateTime.Now;
 
-            int userId = int.Parse(Session["UserId"].ToString());
+            // Create order
+            int userID = int.Parse(Session["UserId"].ToString());
             string status = "progress";
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["OrderConnectionString"].ConnectionString);
             conn.Open();
 
-            string comand = "insert into Orders(id_user,date_time,status) values(@idUser,@date,@status)";
-            SqlCommand comm = new SqlCommand(comand, conn);
-            comm.Parameters.AddWithValue("@idUser", userId);
+            string query = "insert into Orders(id_user,date_time,status) values(@idUser,@date,@status)";
+            SqlCommand comm = new SqlCommand(query, conn);
+            comm.Parameters.AddWithValue("@idUser", userID);
             comm.Parameters.AddWithValue("@date", localDate);
             comm.Parameters.AddWithValue("@status", status);
-
             comm.ExecuteNonQuery();
 
-            comand = "select id_order from Orders where status='" + status + "'";
-            comm = new SqlCommand(comand, conn);
-            string orderId = comm.ExecuteScalar().ToString();
+            query = "select id_order from Orders where status='" + status + "'";
+            comm = new SqlCommand(query, conn);
+            string orderID = comm.ExecuteScalar().ToString();
 
-            Session["Order"] = orderId;
+            //Create session with order id
+            Session["Order"] = orderID;
 
             Response.Redirect("order.aspx");
             conn.Close();
-
-
 
         }
     }

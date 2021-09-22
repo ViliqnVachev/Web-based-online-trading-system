@@ -11,7 +11,7 @@ namespace webStore
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            // Verify for auth session
             if (Session["UserName"] != null || Session["UserId"] != null)
             {
                 LabelWelcome.Text += " " + Session["UserName"].ToString();
@@ -32,7 +32,7 @@ namespace webStore
 
 
             string selectIndex = GridView1.SelectedRow.Cells[4].Text;
-            Session["ProductNameOrder"] = selectIndex;
+            Session["ProductNumber"] = selectIndex;
 
             if (Session["Order"] != null)
             {
